@@ -29,9 +29,10 @@ namespace ASP.NET_APP_Lesson_1.Helpers
             catch (HttpRequestException e)
             {
                 Console.WriteLine("Message :{0} - {1} ", blog, e.Message);
+                return $"ErrorMessage :{blog} - {e.Message}";
             }
 
-            return string.Empty;
+            
         }
 
         /// <summary>
