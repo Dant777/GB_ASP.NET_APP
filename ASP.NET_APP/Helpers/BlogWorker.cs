@@ -28,7 +28,7 @@ namespace ASP.NET_APP_Lesson_1.Helpers
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("Message :{0} ", e.Message);
+                Console.WriteLine("Message :{0} - {1} ", blog, e.Message);
             }
 
             return string.Empty;
@@ -42,11 +42,33 @@ namespace ASP.NET_APP_Lesson_1.Helpers
         /// <returns>Коллекция блогов</returns>
         public static async Task<string[]> GetBlogsInfoAsync(int startId, int numberBlog)
         {
-            var requesrUriCollection = Enumerable
+            var requestUriCollection = Enumerable
                 .Range(startId, numberBlog)
                 .Select(i => StaticData.BlogUriPost+i)
-                .Select(r => Task.Run(() => GetOneBlogInfoAsync(r)));
-            var result = await Task.WhenAll(requesrUriCollection.ToArray());
+                .Select(r => Task.Run(async () => await GetOneBlogInfoAsync(r)));
+            var result = await Task.WhenAll(requestUriCollection.ToArray());
+            return result;
+        }
+
+        /// <summary>
+        /// Получение постов с случайным/отрицательным/нулевым id
+        /// </summary>
+        /// <param name="startId">номер первого id блога попадающего в коллекцию</param>
+        /// <param name="numberBlog">кол-во блогов попадающего в коллекцию </param>
+        /// <returns>Коллекция блогов</returns>
+        public static async Task<string[]> GetBlogsInfoRndAsync(int numberBlog)
+        {
+            Random rnd = new Random();
+            List<int> listRndNumb = new List<int>();
+            for (int i = 0; i < numberBlog; i++)
+            {
+                listRndNumb.Add(rnd.Next(-20, 50));
+            }
+
+            var requestUriCollection = listRndNumb
+                .Select(i => StaticData.BlogUriPost + i)
+                .Select(r => Task.Run(async () => await GetOneBlogInfoAsync(r)));
+            var result = await Task.WhenAll(requestUriCollection.ToArray());
             return result;
         }
     }
