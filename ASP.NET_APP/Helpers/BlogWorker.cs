@@ -44,9 +44,9 @@ namespace ASP.NET_APP_Lesson_1.Helpers
         {
             var requesrUriCollection = Enumerable
                 .Range(startId, numberBlog)
-                .Select(i => StaticData.BlogUriPost+i);
-            var taskEnum = requesrUriCollection.Select(r => Task.Run(() => GetOneBlogInfoAsync(r)));
-            var result = await Task.WhenAll(taskEnum.ToArray());
+                .Select(i => StaticData.BlogUriPost+i)
+                .Select(r => Task.Run(() => GetOneBlogInfoAsync(r)));
+            var result = await Task.WhenAll(requesrUriCollection.ToArray());
             return result;
         }
     }

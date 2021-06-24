@@ -12,9 +12,9 @@ namespace ASP.NET_APP
         static async Task Main(string[] args)
         {
               
-            var blogInfoCollectiion = await BlogWorker.GetBlogsInfoAsync(4, 10);
+            var blogInfoCollectiion = await BlogWorker.GetBlogsInfoAsync(-1, 50);
 
-            Logger.WriteInFile(blogInfoCollectiion);
+            await Logger.WriteInFileAsync(blogInfoCollectiion);
 
             Console.ReadKey();
         }
