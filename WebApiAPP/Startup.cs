@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataLayer;
+using DataLayer.Repository.DAL;
+using DataLayer.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApiAPP
@@ -30,6 +32,9 @@ namespace WebApiAPP
         {
 
             services.AddControllers();
+
+            services.AddTransient<IPersonRepository, PersonRepository>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiAPP", Version = "v1" });
@@ -39,6 +44,7 @@ namespace WebApiAPP
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
