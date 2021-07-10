@@ -13,5 +13,6 @@ namespace DataLayer.Repository.Interfaces
         IList<T> GetAll();
         T GetById(int id);
         T GetByName(string name);
+        IList<T> GetCollection(int startId, int countPerson);
     }
 }

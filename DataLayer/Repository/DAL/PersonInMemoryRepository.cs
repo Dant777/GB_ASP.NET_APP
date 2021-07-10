@@ -285,5 +285,9 @@ namespace DataLayer.Repository.DAL
         {
             return _dbInMemory.FirstOrDefault(p => p.FirstName.Contains(name));
         }
+        public IList<Person> GetCollection(int startId, int countPerson)
+        {
+            return _dbInMemory.Where(p => p.Id >= startId && p.Id <= startId + countPerson).ToList();
+        }
     }
 }

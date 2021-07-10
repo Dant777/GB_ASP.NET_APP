@@ -58,5 +58,12 @@ namespace WebApiAPP.Controllers
 
             return Ok(person);
         }
+        [HttpGet("persons")]
+        public IActionResult GetCollection([FromQuery] int skip, [FromQuery] int take)
+        {
+            var persons = _repository.GetCollection(skip, take);
+
+            return Ok(persons);
+        }
     }
 }

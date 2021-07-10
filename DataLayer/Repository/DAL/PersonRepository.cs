@@ -30,5 +30,10 @@ namespace DataLayer.Repository.DAL
         {
             return _db.Persons.FirstOrDefault(p => p.FirstName.Contains(name));
         }
+
+        public IList<Person> GetCollection(int startId, int countPerson)
+        {
+            return _db.Persons.Where(p => p.Id >= startId && p.Id <= startId + countPerson ).ToList();
+        }
     }
 }
