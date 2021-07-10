@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
 
@@ -15,16 +12,19 @@ namespace DataLayer.Repository.DAL
         {
             _db = db;
         }
-
+        public void Create(Person item)
+        {
+            _db.Add(item);
+            _db.SaveChanges();
+        }
         public IList<Person> GetAll()
         {
             return _db.Persons.ToList();
         }
 
-        public void Create(Person item)
+        public Person GetById(int id)
         {
-            _db.Add(item);
-            _db.SaveChanges();
+            return _db.Persons.FirstOrDefault(p => p.Id == id);
         }
     }
 }

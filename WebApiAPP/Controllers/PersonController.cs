@@ -44,6 +44,12 @@ namespace WebApiAPP.Controllers
 
             return Ok(persons);
         }
+        [HttpGet("person/{personId}")]
+        public IActionResult GetAll([FromRoute] int personId)
+        {
+            var persons = _repository.GetById(personId);
 
+            return Ok(persons);
+        }
     }
 }
