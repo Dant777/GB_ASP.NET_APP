@@ -45,11 +45,18 @@ namespace WebApiAPP.Controllers
             return Ok(persons);
         }
         [HttpGet("person/{personId}")]
-        public IActionResult GetAll([FromRoute] int personId)
+        public IActionResult GetById([FromRoute] int personId)
         {
-            var persons = _repository.GetById(personId);
+            var person = _repository.GetById(personId);
 
-            return Ok(persons);
+            return Ok(person);
+        }
+        [HttpGet("person")]
+        public IActionResult GetByName([FromQuery] string searchTerm)
+        {
+            var person = _repository.GetByName(searchTerm);
+
+            return Ok(person);
         }
     }
 }

@@ -26,5 +26,9 @@ namespace DataLayer.Repository.DAL
         {
             return _db.Persons.FirstOrDefault(p => p.Id == id);
         }
+        public Person GetByName(string name)
+        {
+            return _db.Persons.FirstOrDefault(p => p.FirstName.Contains(name));
+        }
     }
 }

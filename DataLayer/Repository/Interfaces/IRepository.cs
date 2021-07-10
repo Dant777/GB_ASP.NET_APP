@@ -12,5 +12,6 @@ namespace DataLayer.Repository.Interfaces
         void Create(T item);
         IList<T> GetAll();
         T GetById(int id);
+        T GetByName(string name);
     }
 }

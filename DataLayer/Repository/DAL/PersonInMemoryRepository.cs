@@ -279,8 +279,11 @@ namespace DataLayer.Repository.DAL
         public Person GetById(int id)
         {
             return _dbInMemory.FirstOrDefault(p => p.Id == id);
-        } 
+        }
 
-      
+        public Person GetByName(string name)
+        {
+            return _dbInMemory.FirstOrDefault(p => p.FirstName.Contains(name));
+        }
     }
 }
