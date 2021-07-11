@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
@@ -34,6 +35,27 @@ namespace DataLayer.Repository.DAL
         public IList<Person> GetCollection(int startId, int countPerson)
         {
             return _db.Persons.Where(p => p.Id >= startId && p.Id <= startId + countPerson ).ToList();
+        }
+
+        public void Update(Person item)
+        {
+            if (!_db.Persons.Any(p => p.Id == item.Id))
+            {
+                throw new Exception("ID not found");
+            }
+            _db.Persons.Update(item);
+            _db.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var person = _db.Persons.FirstOrDefault(p => p.Id == id);
+            if (person == null)
+            {
+                return;
+            }
+            _db.Persons.Remove(person);
+            _db.SaveChanges();
         }
     }
 }

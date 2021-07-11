@@ -26,7 +26,7 @@ namespace WebApiAPP
 
             services.AddControllers();
 
-            services.AddTransient<IPersonRepository, PersonInMemoryRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>();
 
             services.AddSwaggerGen(c =>
             {

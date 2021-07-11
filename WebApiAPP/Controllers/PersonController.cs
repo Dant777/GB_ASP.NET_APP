@@ -44,10 +44,10 @@ namespace WebApiAPP.Controllers
 
             return Ok(persons);
         }
-        [HttpGet("person/{personId}")]
-        public IActionResult GetById([FromRoute] int personId)
+        [HttpGet("person/{id}")]
+        public IActionResult GetById([FromRoute] int id)
         {
-            var person = _repository.GetById(personId);
+            var person = _repository.GetById(id);
 
             return Ok(person);
         }
@@ -64,6 +64,39 @@ namespace WebApiAPP.Controllers
             var persons = _repository.GetCollection(skip, take);
 
             return Ok(persons);
+        }
+
+        [HttpPut("persons")]
+        public IActionResult Update(int id, PersonRequest request)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }   
+            Person person = new Person()
+            {
+                Id = id,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Company = request.Company,
+                Age = request.Age
+            };
+            _repository.Update(person);
+
+            return Ok();
+        }
+
+        [HttpDelete("person/{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            _repository.Delete(id);
+
+            return Ok();
         }
     }
 }

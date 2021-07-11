@@ -14,5 +14,7 @@ namespace DataLayer.Repository.Interfaces
         T GetById(int id);
         T GetByName(string name);
         IList<T> GetCollection(int startId, int countPerson);
+        void Update(T item);
+        void Delete(int id);
     }
 }
