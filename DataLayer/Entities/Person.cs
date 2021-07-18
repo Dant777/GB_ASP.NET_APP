@@ -14,5 +14,6 @@ namespace DataLayer.Entities
         public string Email { get; set; }
         public string Company { get; set; }
         public int Age { get; set; }
+        public ICollection<Clinic> Clinics { get; set; }
     }
 }

@@ -32,7 +32,8 @@ namespace WebApiAPP.Controllers
                 LastName = request.LastName,
                 Email = request.Email,
                 Company = request.Company,
-                Age = request.Age
+                Age = request.Age,
+                Clinics = request.Clinics
             });
             return Ok();
         }
@@ -80,7 +81,8 @@ namespace WebApiAPP.Controllers
                 LastName = request.LastName,
                 Email = request.Email,
                 Company = request.Company,
-                Age = request.Age
+                Age = request.Age,
+                Clinics = request.Clinics
             };
             _repository.Update(person);
 

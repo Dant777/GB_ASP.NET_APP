@@ -32,9 +32,9 @@ namespace DataLayer.Repository.DAL
             return _db.Persons.FirstOrDefault(p => p.FirstName.Contains(name));
         }
 
-        public IList<Person> GetCollection(int startId, int countPerson)
+        public IList<Person> GetCollection(int id, int count)
         {
-            return _db.Persons.Where(p => p.Id >= startId && p.Id <= startId + countPerson ).ToList();
+            return _db.Persons.Where(p => p.Id >= id && p.Id <= id + count).ToList();
         }
 
         public void Update(Person item)
