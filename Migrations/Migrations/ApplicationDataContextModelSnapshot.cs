@@ -18,22 +18,7 @@ namespace Migrations.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("ClinicPerson", b =>
-                {
-                    b.Property<int>("ClinicsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PersonsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ClinicsId", "PersonsId");
-
-                    b.HasIndex("PersonsId");
-
-                    b.ToTable("ClinicPerson");
-                });
-
-            modelBuilder.Entity("DataLayer.Entities.Clinic", b =>
+            modelBuilder.Entity("DataLayer.Entities.Hospital", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +30,7 @@ namespace Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clinics");
+                    b.ToTable("Hospitals");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Person", b =>
@@ -75,26 +60,26 @@ namespace Migrations.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("DataLayer.Entities.Post", b =>
+            modelBuilder.Entity("HospitalPerson", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<int>("HospitalsId")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Content")
-                        .HasColumnType("text");
+                    b.Property<int>("PersonsId")
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("HospitalsId", "PersonsId");
 
-                    b.ToTable("Posts");
+                    b.HasIndex("PersonsId");
+
+                    b.ToTable("Enrollments");
                 });
 
-            modelBuilder.Entity("ClinicPerson", b =>
+            modelBuilder.Entity("HospitalPerson", b =>
                 {
-                    b.HasOne("DataLayer.Entities.Clinic", null)
+                    b.HasOne("DataLayer.Entities.Hospital", null)
                         .WithMany()
-                        .HasForeignKey("ClinicsId")
+                        .HasForeignKey("HospitalsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

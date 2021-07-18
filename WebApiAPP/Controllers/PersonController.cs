@@ -8,6 +8,7 @@ using DataLayer;
 using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
 using DataLayer.Request;
+using DataLayer.Response;
 using Microsoft.Extensions.Logging;
 
 namespace WebApiAPP.Controllers
@@ -32,8 +33,7 @@ namespace WebApiAPP.Controllers
                 LastName = request.LastName,
                 Email = request.Email,
                 Company = request.Company,
-                Age = request.Age,
-                Clinics = request.Clinics
+                Age = request.Age
             });
             return Ok();
         }
@@ -42,29 +42,84 @@ namespace WebApiAPP.Controllers
         public IActionResult GetAll()
         {
             var persons = _repository.GetAll();
-
-            return Ok(persons);
+            List<PersonResponse> personResponses = new List<PersonResponse>();
+            foreach (var person in persons)
+            {
+                personResponses.Add(new PersonResponse()
+                {
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    Email = person.Email,
+                    Company = person.Company,
+                    Age = person.Age
+                });
+            }
+            return Ok(personResponses);
         }
         [HttpGet("person/{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
             var person = _repository.GetById(id);
+            PersonResponse personRespons = new PersonResponse()
+            {
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                Email = person.Email,
+                Company = person.Company,
+                Age = person.Age
+            };
 
-            return Ok(person);
+            return Ok(personRespons);
         }
         [HttpGet("person")]
-        public IActionResult GetByName([FromQuery] string searchTerm)
+        public IActionResult GetByName([FromQuery] string searchName)
         {
-            var person = _repository.GetByName(searchTerm);
+            var person = _repository.GetByName(searchName);
 
-            return Ok(person);
+            PersonResponse personRespons = new PersonResponse()
+            {
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                Email = person.Email,
+                Company = person.Company,
+                Age = person.Age
+            };
+
+            return Ok(personRespons);
         }
         [HttpGet("persons")]
         public IActionResult GetCollection([FromQuery] int skip, [FromQuery] int take)
         {
             var persons = _repository.GetCollection(skip, take);
 
-            return Ok(persons);
+            List<PersonResponse> personResponses = new List<PersonResponse>();
+            foreach (var person in persons)
+            {
+                personResponses.Add(new PersonResponse()
+                {
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    Email = person.Email,
+                    Company = person.Company,
+                    Age = person.Age
+                });
+            }
+            return Ok(personResponses);
+        }
+
+        [HttpGet("hospitals")]
+        public IActionResult GetHospitals( int personId)
+        {
+            var person = _repository.GetById(personId);
+            List<HospitalResponse> hospitalResponses = new List<HospitalResponse>();
+            foreach (var hospital in person.Hospitals)
+            {
+                hospitalResponses.Add(new HospitalResponse()
+                {
+                    Name = hospital.Name
+                });
+            }
+            return Ok(hospitalResponses);
         }
 
         [HttpPut("persons")]
@@ -81,10 +136,22 @@ namespace WebApiAPP.Controllers
                 LastName = request.LastName,
                 Email = request.Email,
                 Company = request.Company,
-                Age = request.Age,
-                Clinics = request.Clinics
+                Age = request.Age
             };
             _repository.Update(person);
+
+            return Ok();
+        }
+
+        [HttpPut("persons/{personId}/hospital/{hospitalId}")]
+        public IActionResult AddHospital([FromRoute] int personId, [FromRoute] int hospitalId)
+        {
+            if (personId == null || personId == 0)
+            {
+                return NotFound();
+            }
+
+            _repository.AddHospitalOrPerson(personId, hospitalId);
 
             return Ok();
         }
@@ -100,5 +167,7 @@ namespace WebApiAPP.Controllers
 
             return Ok();
         }
+
+
     }
 }

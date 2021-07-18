@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repository.DAL
 {
@@ -20,21 +21,35 @@ namespace DataLayer.Repository.DAL
         }
         public IList<Person> GetAll()
         {
-            return _db.Persons.ToList();
+            List<Person> persons = _db.Persons
+                .Include(e => e.Hospitals)
+                .AsNoTracking()
+                .ToList();
+
+            return persons;
         }
 
         public Person GetById(int id)
         {
-            return _db.Persons.FirstOrDefault(p => p.Id == id);
+            return _db.Persons
+                .Include(e => e.Hospitals)
+                .AsNoTracking()
+                .FirstOrDefault(p => p.Id == id);
         }
         public Person GetByName(string name)
         {
-            return _db.Persons.FirstOrDefault(p => p.FirstName.Contains(name));
+            return _db.Persons
+                .Include(e => e.Hospitals)
+                .AsNoTracking()
+                .FirstOrDefault(p => p.FirstName.Contains(name));
         }
 
         public IList<Person> GetCollection(int id, int count)
         {
-            return _db.Persons.Where(p => p.Id >= id && p.Id <= id + count).ToList();
+            return _db.Persons
+                .Include(e => e.Hospitals)
+                .AsNoTracking()
+                .Where(p => p.Id >= id && p.Id <= id + count).ToList();
         }
 
         public void Update(Person item)
@@ -55,6 +70,15 @@ namespace DataLayer.Repository.DAL
                 return;
             }
             _db.Persons.Remove(person);
+            _db.SaveChanges();
+        }
+
+        public void AddHospitalOrPerson(int personId, int hospitalId)
+        {
+            var person = _db.Persons.Find(personId);
+            var hospital = _db.Hospitals.Find(hospitalId);
+            person.Hospitals.Add(hospital);
+            _db.Persons.Update(person);
             _db.SaveChanges();
         }
     }

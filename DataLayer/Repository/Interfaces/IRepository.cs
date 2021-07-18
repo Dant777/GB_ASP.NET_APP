@@ -16,5 +16,6 @@ namespace DataLayer.Repository.Interfaces
         IList<T> GetCollection(int id, int count);
         void Update(T item);
         void Delete(int id);
+        public void AddHospitalOrPerson(int personId, int hospitalId);
     }
 }
