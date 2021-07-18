@@ -17,7 +17,7 @@
 mono_crash.*
 
 #DataBase
-Docker/
+Docker\
 
 # Build results
 [Dd]ebug/
