@@ -9,12 +9,14 @@ using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
 using DataLayer.Request;
 using DataLayer.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 
 namespace WebApiAPP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PersonController : ControllerBase
     {
         private readonly IPersonRepository _repository;

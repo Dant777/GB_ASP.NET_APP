@@ -9,6 +9,7 @@ using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
 using DataLayer.Request;
 using DataLayer.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using PersonResponse = DataLayer.Response.PersonResponse;
 
@@ -16,6 +17,7 @@ namespace WebApiAPP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class HospitalController : ControllerBase
     {
         private readonly IHospitalRepository _repository;
