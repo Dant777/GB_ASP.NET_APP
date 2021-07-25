@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities;
 
-namespace DataLayer.Repository.Interfaces
+namespace BusinessLogicLayer.Validation.Interfaces
 {
-    public interface IPersonRepository:IRepository<Person>
+    public interface IPersonValidationService : IValidationService<Person>
     {
-        
     }
 }

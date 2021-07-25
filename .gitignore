@@ -15,8 +15,11 @@
 
 # Mono auto generated files
 mono_crash.*
-#Data
+
+#DataBase
 Docker/
+#TestPrj
+ConsoleTest/
 
 # Build results
 [Dd]ebug/

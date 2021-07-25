@@ -7,7 +7,7 @@ using DataLayer.Entities;
 
 namespace DataLayer.Repository.Interfaces
 {
-    public interface IPersonRepository:IRepository<Person>
+    public interface IHospitalRepository : IRepository<Hospital>
     {
         
     }
