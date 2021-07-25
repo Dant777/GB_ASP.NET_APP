@@ -17,6 +17,7 @@
 mono_crash.*
 
 #DataBase
+Docker/
 #TestPrj
 ConsoleTest/
 

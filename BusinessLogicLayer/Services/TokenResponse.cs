@@ -1,4 +1,4 @@
-﻿namespace WebApiAPP.Services
+﻿namespace BusinessLogicLayer.Services
 {
     public sealed class TokenResponse
     {

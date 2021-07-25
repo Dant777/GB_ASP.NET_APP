@@ -4,11 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using WebApiAPP.Services;
 
-namespace WebApiAPP.Authentication
+namespace BusinessLogicLayer.Services
 {
-    internal sealed class UserService : IUserService
+    public sealed class UserService : IUserService
     {
         private IDictionary<string, AuthResponse> _users = new Dictionary<string, AuthResponse>()
         {

@@ -1,5 +1,9 @@
 using System;
 using System.Text;
+using BusinessLogicLayer.Services;
+using BusinessLogicLayer.Validation;
+using BusinessLogicLayer.Validation.Interfaces;
+using BusinessLogicLayer.Validation.Operations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,12 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using DataLayer;
+using DataLayer.Entities;
 using DataLayer.Repository.DAL;
+using BusinessLogicLayer;
 using DataLayer.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using WebApiAPP.Authentication;
+
 
 namespace WebApiAPP
 {
@@ -35,6 +41,10 @@ namespace WebApiAPP
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IHospitalRepository, HospitalRepository>();
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IOperationFailure, OperationFailure>();
+            services.AddSingleton<IOperationResult<Person>, OperationResult<Person>>();
+            services.AddSingleton<IPersonValidationService, PersonValidationService>();
+            services.AddSingleton<IPersonBusinessLogicService, PersonBusinessLogicService>();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

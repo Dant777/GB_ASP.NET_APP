@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogicLayer.Services;
+using BusinessLogicLayer.Validation.Interfaces;
 using DataLayer;
 using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
@@ -20,24 +22,32 @@ namespace WebApiAPP.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonRepository _repository;
+        private readonly IPersonBusinessLogicService _personService;
 
-        public PersonController(IPersonRepository repository)
+        public PersonController(IPersonRepository repository, IPersonBusinessLogicService personService)
         {
             _repository = repository;
+            _personService = personService;
         }
 
         [HttpPost("create")]
         public IActionResult Create([FromBody] PersonRequest request)
         {
-            _repository.Create(new Person()
+            Person person = new Person()
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
                 Company = request.Company,
                 Age = request.Age
-            });
-            return Ok();
+            };
+            IOperationResult<Person> result = _personService.Create(person);
+            if (!result.Succeed)
+            {
+                return Ok(result.Failures);
+            }
+            _repository.Create(result.Result);
+            return Ok(result.Result);
         }
 
         [HttpGet("all")]

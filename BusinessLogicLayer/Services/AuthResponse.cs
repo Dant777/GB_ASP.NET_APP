@@ -1,4 +1,4 @@
-﻿namespace WebApiAPP.Services
+﻿namespace BusinessLogicLayer.Services
 {
     internal sealed class AuthResponse
     {

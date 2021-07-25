@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrations", "Migrations\Mi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{5A5D317E-32A1-4493-8856-8D80273B0AE5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DFDEFEDC-DAAD-4AD1-9CF7-0A0CC243EAEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{CBA49A49-E34D-47A5-BEF0-B6225996929B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{1B8C2D93-C0C6-4BD4-B64D-171C49FB9E58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,16 +29,13 @@ Global
 		{5A5D317E-32A1-4493-8856-8D80273B0AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A5D317E-32A1-4493-8856-8D80273B0AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A5D317E-32A1-4493-8856-8D80273B0AE5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBA49A49-E34D-47A5-BEF0-B6225996929B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBA49A49-E34D-47A5-BEF0-B6225996929B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBA49A49-E34D-47A5-BEF0-B6225996929B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBA49A49-E34D-47A5-BEF0-B6225996929B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B8C2D93-C0C6-4BD4-B64D-171C49FB9E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B8C2D93-C0C6-4BD4-B64D-171C49FB9E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B8C2D93-C0C6-4BD4-B64D-171C49FB9E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B8C2D93-C0C6-4BD4-B64D-171C49FB9E58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{CBA49A49-E34D-47A5-BEF0-B6225996929B} = {DFDEFEDC-DAAD-4AD1-9CF7-0A0CC243EAEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB162272-58C4-4B25-80FE-B6C91069B274}
