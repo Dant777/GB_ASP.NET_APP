@@ -30,10 +30,7 @@ namespace WebApiAPP.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody] HospitalRequest request)
         {
-            _repository.Create(new Hospital()
-            {
-                Name = request.Name
-            });
+            _repository.Create(new Hospital(request.Name));
             return Ok();
         }
 
@@ -71,6 +68,7 @@ namespace WebApiAPP.Controllers
             };
             return Ok(hospitalResponse);
         }
+
         [HttpGet("hospitals")]
         public IActionResult GetCollection([FromQuery] int skip, [FromQuery] int take)
         {
@@ -113,13 +111,9 @@ namespace WebApiAPP.Controllers
             {
                 return NotFound();
             }   
-            Hospital Hospital = new Hospital()
-            {
-               Id = id, 
-               Name = request.Name
-              
-            };
-            _repository.Update(Hospital);
+            Hospital hospital = new Hospital(request.Name);
+            hospital.Id = id;
+            _repository.Update(hospital);
 
             return Ok();
         }

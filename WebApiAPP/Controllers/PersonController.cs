@@ -33,14 +33,12 @@ namespace WebApiAPP.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody] PersonRequest request)
         {
-            Person person = new Person()
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Company = request.Company,
-                Age = request.Age
-            };
+            Person person = new Person(request.FirstName,
+                request.LastName,
+                request.Email, 
+                request.Company,
+                request.Age);
+           
             IOperationResult<Person> result = _personService.Create(person);
             if (!result.Succeed)
             {
@@ -140,16 +138,13 @@ namespace WebApiAPP.Controllers
             if (id == null || id == 0)
             {
                 return NotFound();
-            }   
-            Person person = new Person()
-            {
-                Id = id,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Company = request.Company,
-                Age = request.Age
-            };
+            }
+            Person person = new Person(request.FirstName,
+                request.LastName,
+                request.Email,
+                request.Company,
+                request.Age);
+            person.Id = id;
             _repository.Update(person);
 
             return Ok();

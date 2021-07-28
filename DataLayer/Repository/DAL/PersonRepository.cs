@@ -58,6 +58,7 @@ namespace DataLayer.Repository.DAL
             {
                 throw new Exception("ID not found");
             }
+          
             _db.Persons.Update(item);
             _db.SaveChanges();
         }

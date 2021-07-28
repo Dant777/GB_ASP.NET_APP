@@ -51,12 +51,13 @@ namespace DataLayer.Repository.DAL
                 .Where(p => p.Id >= id && p.Id <= id + count).ToList();
         }
 
-        public void Update(Hospital item)
+        public void Update( Hospital item)
         {
             if (!_db.Hospitals.Any(p => p.Id == item.Id))
             {
                 throw new Exception("ID not found");
             }
+
             _db.Hospitals.Update(item);
             _db.SaveChanges();
         }
