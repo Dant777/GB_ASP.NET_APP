@@ -7,22 +7,28 @@ using DataLayer.Entities.Interfaces;
 
 namespace DataLayer.Entities
 {
-    public class InspectionAnalysis : IAnalysis
+    public class Vaccine : IVaccine
     {
-        public InspectionAnalysis(int code, bool paid, float cost)
+        public Vaccine(string name, float cost)
         {
-            Code = code;
-            Paid = paid;
+            Name = name;
             Cost = cost;
         }
 
-        public int Code { get; }
+        public int Id { get; set; }
+        public string Name { get; }
+        public float Cost { get; }
         public bool Paid { get; private set; }
-        public float Cost { get;  }
+        public bool Vaccineded { get; private set; }
 
         public void Pay()
         {
             Paid = true;
+        }
+
+        public void SetVaccine()
+        {
+            Vaccineded = true;
         }
     }
 

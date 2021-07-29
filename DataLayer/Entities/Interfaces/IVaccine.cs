@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Entities.Interfaces
 {
-    public interface IAnalysis
+    public interface IVaccine
     {
-        public int Code { get; }
+        public int Id { get; set; }
+        public string Name { get; }
         public bool Paid { get; }
         public float Cost { get; }
+        public bool Vaccineded { get; }
         public void Pay();
+        public void SetVaccine();
     }
 }

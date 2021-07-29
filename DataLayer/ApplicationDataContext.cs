@@ -16,6 +16,7 @@ namespace DataLayer
         }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>()
