@@ -13,10 +13,12 @@ namespace DataLayer.Repository.DAL
         {
             _db = db;
         }
-        public void Create(Person item)
+        public int Create(Person item)
         {
             _db.Add(item);
             _db.SaveChanges();
+            var person = _db.Persons.ToList()[^1];
+            return person.Id;
         }
         public IList<Person> GetAll()
         {
@@ -32,9 +34,10 @@ namespace DataLayer.Repository.DAL
             return _db.Persons.FirstOrDefault(p => p.FirstName.Contains(name));
         }
 
-        public IList<Person> GetCollection(int startId, int countPerson)
+        public IList<Person> GetCollection(int skip, int take)
         {
-            return _db.Persons.Where(p => p.Id >= startId && p.Id <= startId + countPerson ).ToList();
+            var personSkipArr = _db.Persons.Skip(skip);
+            return personSkipArr.Take(take).ToList();
         }
 
         public void Update(Person item)

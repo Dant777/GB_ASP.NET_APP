@@ -1,14 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataLayer;
+﻿using BussinesLogiclayer.Services.Interfaces;
 using DataLayer.Entities;
-using DataLayer.Repository.Interfaces;
 using DataLayer.Request;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiAPP.Controllers
 {
@@ -16,25 +9,26 @@ namespace WebApiAPP.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private readonly IPersonRepository _repository;
+        private readonly IPersonService _repository;
 
-        public PersonController(IPersonRepository repository)
+        public PersonController(IPersonService repository)
         {
             _repository = repository;
         }
 
-        [HttpPost("create")]
+        [HttpPost()]
         public IActionResult Create([FromBody] PersonRequest request)
         {
-            _repository.Create(new Person()
+            var person = new Person()
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
                 Company = request.Company,
                 Age = request.Age
-            });
-            return Ok();
+            };
+            int id = _repository.Create(person);
+            return Ok(id);
         }
 
         [HttpGet("all")]

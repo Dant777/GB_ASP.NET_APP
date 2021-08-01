@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataLayer.Entities;
 
-namespace DataLayer.Repository.Interfaces
+namespace BussinesLogiclayer.Services.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IService<T> where T : class
     {
         int Create(T item);
         IList<T> GetAll();
