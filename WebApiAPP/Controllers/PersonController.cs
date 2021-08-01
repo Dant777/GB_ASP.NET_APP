@@ -1,4 +1,5 @@
-﻿using BussinesLogiclayer.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using BussinesLogiclayer.Services.Interfaces;
 using DataLayer.Entities;
 using DataLayer.Request;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace WebApiAPP.Controllers
         }
 
         [HttpPost()]
-        public IActionResult Create([FromBody] PersonRequest request)
+        public async Task<IActionResult>  Create([FromBody] PersonRequest request)
         {
             var person = new Person()
             {
@@ -27,41 +28,41 @@ namespace WebApiAPP.Controllers
                 Company = request.Company,
                 Age = request.Age
             };
-            int id = _repository.Create(person);
+            int id = await _repository.Create(person);
             return Ok(id);
         }
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var persons = _repository.GetAll();
+            var persons = await _repository.GetAll();
 
             return Ok(persons);
         }
         [HttpGet("person/{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var person = _repository.GetById(id);
+            var person = await _repository.GetById(id);
 
             return Ok(person);
         }
         [HttpGet("person")]
-        public IActionResult GetByName([FromQuery] string searchTerm)
+        public async Task<IActionResult> GetByName([FromQuery] string searchTerm)
         {
-            var person = _repository.GetByName(searchTerm);
+            var person = await _repository.GetByName(searchTerm);
 
             return Ok(person);
         }
         [HttpGet("persons")]
-        public IActionResult GetCollection([FromQuery] int skip, [FromQuery] int take)
+        public async Task<IActionResult> GetCollection([FromQuery] int skip, [FromQuery] int take)
         {
-            var persons = _repository.GetCollection(skip, take);
+            var persons = await _repository.GetCollection(skip, take);
 
             return Ok(persons);
         }
 
         [HttpPut("persons")]
-        public IActionResult Update(int id, PersonRequest request)
+        public async Task<IActionResult> Update(int id, PersonRequest request)
         {
             if (id == null || id == 0)
             {
@@ -76,19 +77,19 @@ namespace WebApiAPP.Controllers
                 Company = request.Company,
                 Age = request.Age
             };
-            _repository.Update(person);
+            await _repository.Update(person);
 
             return Ok();
         }
 
         [HttpDelete("person/{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            _repository.Delete(id);
+            await _repository.Delete(id);
 
             return Ok();
         }

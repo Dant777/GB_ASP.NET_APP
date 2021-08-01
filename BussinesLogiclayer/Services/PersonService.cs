@@ -18,47 +18,43 @@ namespace BussinesLogiclayer.Services
         {
             _repository = repository;
         }
-        public int Create(Person item)
+        public async Task<int> Create(Person item)
         {
-            int id = _repository.Create(item);
-            return id;
+            return await _repository.Create(item);
+             
         }
 
-        public IList<Person> GetAll()
+        public async Task<IList<Person>> GetAll()
         {
-            var persons = _repository.GetAll();
-            return persons;
+            return await _repository.GetAll();
         }
 
-        public Person GetById(int id)
+        public async Task<Person> GetById(int id)
         {
-            var person = _repository.GetById(id);
-
-            return person;
+            
+            return await _repository.GetById(id);
         }
 
-        public Person GetByName(string name)
+        public async Task<Person> GetByName(string name)
         {
-            var person = _repository.GetByName(name);
 
-            return person;
+            return await _repository.GetByName(name);
         }
 
-        public IList<Person> GetCollection(int skip, int take)
+        public async Task<IList<Person>> GetCollection(int skip, int take)
         {
-            var persons = _repository.GetCollection(skip, take);
 
-            return persons;
+            return await _repository.GetCollection(skip, take);
         }
 
-        public void Update(Person item)
+        public async Task<int> Update(Person item)
         {
-            _repository.Update(item);
+            return await _repository.Update(item);
         }
 
-        public void Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            _repository.Delete(id);
+           return await _repository.Delete(id);
         }
     }
 }

@@ -9,12 +9,12 @@ namespace DataLayer.Repository.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        int Create(T item);
-        IList<T> GetAll();
-        T GetById(int id);
-        T GetByName(string name);
-        IList<T> GetCollection(int skip, int take);
-        void Update(T item);
-        void Delete(int id);
+        Task<int> Create(T item);
+        Task<IList<T>> GetAll();
+        Task<T> GetById(int id);
+        Task<T> GetByName(string name);
+        Task<IList<T>> GetCollection(int skip, int take);
+        Task<int> Update(T item);
+        Task<int> Delete(int id);
     }
 }

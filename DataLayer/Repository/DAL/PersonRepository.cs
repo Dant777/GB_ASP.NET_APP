@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DataLayer.Entities;
 using DataLayer.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repository.DAL
 {
@@ -13,52 +15,55 @@ namespace DataLayer.Repository.DAL
         {
             _db = db;
         }
-        public int Create(Person item)
+        public async Task<int> Create(Person item)
         {
-            _db.Add(item);
-            _db.SaveChanges();
-            var person = _db.Persons.ToList()[^1];
-            return person.Id;
+            await _db.AddAsync(item);
+            await _db.SaveChangesAsync();
+            var person = await _db.Persons.ToListAsync();
+            return person[^1].Id;
         }
-        public IList<Person> GetAll()
+        public async Task<IList<Person>> GetAll()
         {
-            return _db.Persons.ToList();
-        }
-
-        public Person GetById(int id)
-        {
-            return _db.Persons.FirstOrDefault(p => p.Id == id);
-        }
-        public Person GetByName(string name)
-        {
-            return _db.Persons.FirstOrDefault(p => p.FirstName.Contains(name));
+            return await _db.Persons.ToArrayAsync();
         }
 
-        public IList<Person> GetCollection(int skip, int take)
+        public async Task<Person> GetById(int id)
         {
-            var personSkipArr = _db.Persons.Skip(skip);
-            return personSkipArr.Take(take).ToList();
+            return await _db.Persons.FirstOrDefaultAsync(p => p.Id == id);
+        }
+        public async Task<Person> GetByName(string name)
+        {
+            return await _db.Persons.FirstOrDefaultAsync(p => p.FirstName.Contains(name));
         }
 
-        public void Update(Person item)
+        public async Task<IList<Person>>GetCollection(int skip, int take)
         {
-            if (!_db.Persons.Any(p => p.Id == item.Id))
+            
+            return await _db.Persons
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
+        }
+
+        public async Task<int> Update(Person item)
+        {
+            if (!await _db.Persons.AnyAsync(p => p.Id == item.Id))
             {
                 throw new Exception("ID not found");
             }
             _db.Persons.Update(item);
-            _db.SaveChanges();
+            return await _db.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            var person = _db.Persons.FirstOrDefault(p => p.Id == id);
+            var person = await _db.Persons.FirstOrDefaultAsync(p => p.Id == id);
             if (person == null)
             {
-                return;
+                throw new Exception("ID not found");
             }
             _db.Persons.Remove(person);
-            _db.SaveChanges();
+            return await _db.SaveChangesAsync();
         }
     }
 }
