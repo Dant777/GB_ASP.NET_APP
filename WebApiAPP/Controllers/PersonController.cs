@@ -153,7 +153,7 @@ namespace WebApiAPP.Controllers
         [HttpPut("persons/{personId}/hospital/{hospitalId}")]
         public IActionResult AddHospital([FromRoute] int personId, [FromRoute] int hospitalId)
         {
-            if (personId == null || personId == 0)
+            if ( personId == 0)
             {
                 return NotFound();
             }
