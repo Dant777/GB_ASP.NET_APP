@@ -7,73 +7,71 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repository.DAL
 {
-    public class PersonRepository:IPersonRepository
+    public class HospitalRepository : IHospitalRepository
     {
         private readonly ApplicationDataContext _db;
-        public PersonRepository(ApplicationDataContext db)
+        public HospitalRepository(ApplicationDataContext db)
         {
             _db = db;
         }
-        public void Create(Person item)
+        public void Create(Hospital item)
         {
             _db.Add(item);
             _db.SaveChanges();
         }
-        public IList<Person> GetAll()
+        public IList<Hospital> GetAll()
         {
-            List<Person> persons = _db.Persons
-                .Include(e => e.Hospitals)
+            return _db.Hospitals
+                .Include(x => x.Persons)
                 .AsNoTracking()
                 .ToList();
 
-            return persons;
         }
 
-        public Person GetById(int id)
+        public Hospital GetById(int id)
         {
-            return _db.Persons
-                .Include(e => e.Hospitals)
+            return _db.Hospitals
+                .Include(x => x.Persons)
                 .AsNoTracking()
                 .FirstOrDefault(p => p.Id == id);
         }
-        public Person GetByName(string name)
+        public Hospital GetByName(string name)
         {
-            return _db.Persons
-                .Include(e => e.Hospitals)
+            return _db.Hospitals
+                .Include(x => x.Persons)
                 .AsNoTracking()
-                .FirstOrDefault(p => p.FirstName.Contains(name));
+                .FirstOrDefault(p => p.Name.Contains(name));
         }
 
-        public IList<Person> GetCollection(int id, int count)
+        public IList<Hospital> GetCollection(int id, int count)
         {
-            return _db.Persons
-                .Include(e => e.Hospitals)
+            return _db.Hospitals
+                .Include(x => x.Persons)
                 .AsNoTracking()
                 .Where(p => p.Id >= id && p.Id <= id + count).ToList();
         }
 
-        public void Update(Person item)
+        public void Update( Hospital item)
         {
-            if (!_db.Persons.Any(p => p.Id == item.Id))
+            if (!_db.Hospitals.Any(p => p.Id == item.Id))
             {
                 throw new Exception("ID not found");
             }
-          
-            _db.Persons.Update(item);
+
+            _db.Hospitals.Update(item);
             _db.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var person = _db.Persons.FirstOrDefault(p => p.Id == id);
-            if (person == null)
+            var hospital = _db.Hospitals.FirstOrDefault(p => p.Id == id);
+            if (hospital == null)
             {
                 return;
             }
-            _db.Persons.Remove(person);
+            _db.Hospitals.Remove(hospital);
             _db.SaveChanges();
         }
-
         public void AddHospitalOrPerson(int personId, int hospitalId)
         {
             var person = _db.Persons.Find(personId);

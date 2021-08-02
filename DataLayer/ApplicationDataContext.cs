@@ -14,7 +14,15 @@ namespace DataLayer
         {
 
         }
-        public DbSet<Post> Posts { get; set; } 
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Hospital> Hospitals { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>()
+                .HasMany(c => c.Hospitals)
+                .WithMany(s => s.Persons)
+                .UsingEntity(j => j.ToTable("Enrollments"));
+        }
     }
 }
