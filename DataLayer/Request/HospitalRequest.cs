@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DataLayer.Entities;
 
-namespace DataLayer.Repository.Interfaces
+namespace DataLayer.Request
 {
-    public interface IPersonRepository:IRepository<Person>
+    public class HospitalRequest
     {
+        public string Name { get; set; }
         
     }
 }

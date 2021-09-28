@@ -2,15 +2,17 @@
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Migrations.Migrations
 {
     [DbContext(typeof(ApplicationDataContext))]
-    partial class ApplicationDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210718065642_AddClinicsInDB")]
+    partial class AddClinicsInDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -18,7 +20,22 @@ namespace Migrations.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("DataLayer.Entities.Hospital", b =>
+            modelBuilder.Entity("ClinicPerson", b =>
+                {
+                    b.Property<int>("ClinicsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PersonsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ClinicsId", "PersonsId");
+
+                    b.HasIndex("PersonsId");
+
+                    b.ToTable("ClinicPerson");
+                });
+
+            modelBuilder.Entity("DataLayer.Entities.Clinic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,7 +47,7 @@ namespace Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Hospitals");
+                    b.ToTable("Clinics");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Person", b =>
@@ -60,26 +77,26 @@ namespace Migrations.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("HospitalPerson", b =>
+            modelBuilder.Entity("DataLayer.Entities.Post", b =>
                 {
-                    b.Property<int>("HospitalsId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("PersonsId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
 
-                    b.HasKey("HospitalsId", "PersonsId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("PersonsId");
-
-                    b.ToTable("Enrollments");
+                    b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("HospitalPerson", b =>
+            modelBuilder.Entity("ClinicPerson", b =>
                 {
-                    b.HasOne("DataLayer.Entities.Hospital", null)
+                    b.HasOne("DataLayer.Entities.Clinic", null)
                         .WithMany()
-                        .HasForeignKey("HospitalsId")
+                        .HasForeignKey("ClinicsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
